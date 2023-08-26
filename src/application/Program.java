@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 
 import db.DB;
 import db.DbException;
@@ -11,6 +12,7 @@ import db.DbException;
 public class Program {
 
 	public static void main(String[] args) {
+		Locale.setDefault(Locale.US);
 		
 		Connection conn = null;
 		Statement statement = null;
@@ -25,8 +27,14 @@ public class Program {
 				System.out.println(result.getString("Name"));
 			}
 			
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeResult(result);
+			DB.closeStatement(statement);
+			DB.closeConnection();
 		}
 		
 		
